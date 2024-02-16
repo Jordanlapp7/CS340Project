@@ -50,16 +50,16 @@
 <body onload="browseTeams()">
 <h1>National Football League General Database</h1>
 
-[ <a href="index.html">Home</a> | <a href="teams.html">Teams</a> | <a href="players.html">Players</a> | <a href="coaches.html">Coaches</a> | <a href="stadiums.html">Players</a> ]
+[ <a href="index.html">Home</a> | <a href="teams.html">Teams</a> | <a href="players.html">Players</a> | <a href="coaches.html">Coaches</a> | <a href="stadiums.html">Stadiums</a> ]
 
-<h2>Home</h2>
+<h2>Teams</h2>
 <div id="browse">
 <p><a href="#" onClick="showAll()">Display all forms</a> </p>
 <table border="1" cellpadding="5">
   <tr>
     <th><a href="#" onClick="newTeam()">New</a></th>
     <th></th>
-    <th>id</th>
+    <th>ID</th>
     <th>Name</th>
     <th>Stadium</th>
     <th>Inception</th>
@@ -67,8 +67,8 @@
     <th>Total Games</th>
   </tr>
   <tr>
-    <td><a href="#" onClick="updateTeam('this.personID')">Edit</a></td>
-    <td><a href="#" onclick="deleteTeam('this.personID')">Delete</a></td>
+    <td><a href="#" onClick="updateTeam('this.teamID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTeam('this.teamID')">Delete</a></td>
     <td align="right" >1</td>
     <td >Jets</td>
     <td align="right" >1</td>
