@@ -26,7 +26,7 @@ CREATE TABLE Teams (
     totalWins INT NOT NULL,
     totalGames INT NOT NULL,
     PRIMARY KEY (teamID),
-    FOREIGN KEY (stadiumID) REFERENCES Stadiums(stadiumID)
+    FOREIGN KEY (stadiumID) REFERENCES Stadiums(stadiumID) ON DELETE CASCADE
 );
 
 -- Create Stadiums table
@@ -44,7 +44,7 @@ CREATE TABLE Players (
     positionID VARCHAR(45),
     salary DECIMAL(10,2),
     PRIMARY KEY (playerID),
-    FOREIGN KEY (positionID) REFERENCES Positions(positionID)
+    FOREIGN KEY (positionID) REFERENCES Positions(positionID) ON DELETE CASCADE
 );
 -- Create Coaches table
 CREATE TABLE Coaches (
@@ -78,8 +78,8 @@ CREATE TABLE TeamsPlayers (
     teamID INT,
     playerID INT,
     PRIMARY KEY (teamPlayerID),
-    FOREIGN KEY (teamID) REFERENCES Teams(teamID),
-    FOREIGN KEY (playerID) REFERENCES Players(playerID)
+    FOREIGN KEY (teamID) REFERENCES Teams(teamID) ON DELETE CASCADE,
+    FOREIGN KEY (playerID) REFERENCES Players(playerID) ON DELETE CASCADE
 );
 
 CREATE TABLE TeamsCoaches (
@@ -87,8 +87,8 @@ CREATE TABLE TeamsCoaches (
     teamID INT,
     coachID INT,
     PRIMARY KEY (teamCoachID), -- Added comma here
-    FOREIGN KEY (teamID) REFERENCES Teams(teamID),
-    FOREIGN KEY (coachID) REFERENCES Coaches(coachID)
+    FOREIGN KEY (teamID) REFERENCES Teams(teamID) ON DELETE CASCADE,
+    FOREIGN KEY (coachID) REFERENCES Coaches(coachID) ON DELETE CASCADE
 );
 
 CREATE TABLE TeamsGames (
@@ -97,8 +97,8 @@ CREATE TABLE TeamsGames (
     gameID INT,
     isHomeTeam TINYINT NOT NULL,
     PRIMARY KEY (teamGameID),
-    FOREIGN KEY (teamID) REFERENCES Teams(teamID),
-    FOREIGN KEY (gameID) REFERENCES Games(gameID)
+    FOREIGN KEY (teamID) REFERENCES Teams(teamID) ON DELETE CASCADE,
+    FOREIGN KEY (gameID) REFERENCES Games(gameID) ON DELETE CASCADE
 );
 
 
