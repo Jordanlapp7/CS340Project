@@ -1,0 +1,170 @@
+<html>
+<head>
+<title>National Football League General Database</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newTeamPlayer() { showform('insert'); }
+    function updateTeamPlayer(pid) { showform('update'); }
+    function deleteTeamPlayer(pid) { showform ('delete'); }
+    function browseTeamsPlayers() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseTeamsPlayers()">
+<h1>National Football League General Database</h1>
+
+[ <a href="index.html">Home</a> | <a href="teams.html">Teams</a> | <a href="players.html">Players</a> | <a href="teamsPlayers.html">Team-Player Relationships</a> | <a href="coaches.html">Coaches</a> | <a href="teamsCoaches.html">Team-Coach Relationships</a> | <a href="games.html">Games</a> | <a href="teamsGames.html">Team-Game Relationships</a> | <a href="stadiums.html">Stadiums</a> | <a href="positions.html">Positions</a>]
+<h2>Team-Player Relationships</h2>
+<div id="browse">
+<p><a href="#" onClick="showAll()">Display all forms</a> </p>
+<table border="1" cellpadding="5">
+  <tr>
+    <th><a href="#" onClick="newTeam()">New</a></th>
+    <th></th>
+    <th>ID</th>
+    <th>Team</th>
+    <th>Player</th>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTeamPlayer('this.teamPlayerID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTeamPlayer('this.teamPlayerID')">Delete</a></td>
+    <td >1</td>
+    <td>Steelers</td>
+    <td>Justin Fields</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTeamPlayer('this.teamPlayerID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTeamPlayer('this.teamPlayerID')">Delete</a></td>
+    <td >2</td>
+    <td>Steelers</td>
+    <td>Kenny Pickett</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTeamPlayer('this.teamPlayerID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTeamPlayer('this.teamPlayerID')">Delete</a></td>
+    <td >3</td>
+    <td>Giants</td>
+    <td>Daniel Jones</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTeamPlayer('this.teamPlayerID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTeamPlayer('this.teamPlayerID')">Delete</a></td>
+    <td >4</td>
+    <td>Jets</td>
+    <td>Aaron Rodgers</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTeamPlayer('this.teamPlayerID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTeamPlayer('this.teamPlayerID')">Delete</a></td>
+    <td >5</td>
+    <td>Chargers</td>
+    <td>Aaron Rodgers</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST" id="addTeamCoach">
+        <legend><strong>Add Team-Player Relationship</strong></legend>
+          <fieldset class="fields">
+            <label> Team </label> <select name="teamID">
+            	<option value="0">&nbsp;</option>
+                <option value="1">Jets</option>
+                <option value="2">Giants</option>
+                <option value="3">Steelers</option>
+                <option value="4">Rams</option>
+                <option value="5">Chargers</option>
+                </select>
+            <label> Coach </label> <select name="playerId">
+                <option value="0">&nbsp;</option>
+                <option value="1">Justin Fields</option>
+                <option value="2">Kenny Pickett</option>
+                <option value="3">Aaron Rodgers</option>
+                <option value="4">Daniel Jones</option>
+                </select>
+      </fieldset>
+          <input class="btn" type="submit" id="addTeamPlayer" value="Add Team Player">
+          <input class="btn" type="button" value="cancel" onClick="browseTeamsPlayers()">
+	</form> 
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+    <form method="POST" id="UpdateTeamCoach">
+        <legend><strong>Update Team-Coach Relationship</strong></legend>
+          <fieldset class="fields">
+            <label> Team </label> <select name="teamID">
+            	<option value="0">&nbsp;</option>
+                <option value="1">Jets</option>
+                <option value="2">Giants</option>
+                <option value="3">Steelers</option>
+                <option value="4">Rams</option>
+                <option value="5">Chargers</option>
+                </select>
+            <label> Coach </label> <select name="playerId">
+                <option value="0">&nbsp;</option>
+                <option value="1">Justin Fields</option>
+                <option value="2">Kenny Pickett</option>
+                <option value="3">Aaron Rodgers</option>
+                <option value="4">Daniel Jones</option>
+                </select>
+      </fieldset>
+          <input class="btn" type="submit" id="UpdateSaveTeamPlayer" value="Save Update Team Player">
+          <input class="btn" type="button" value="cancel" onClick="browseTeamsPlayers()">
+	</form> 
+</div><!-- update -->
+<p>&nbsp;</p>
+<div id="delete" style="display: block">
+  <form method="POST" id="deleteTeamPlayer">
+      <legend><strong>Delete Team-Player Relationship</strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <input type="hidden" name="teamPlayerID" id="deleteTeamPlayerID" value="1">
+          <label><strong>ID:</strong></label> 1
+            <label> <strong>Team</strong> </label> Steelers
+            <label> <strong>Player</strong> </label> Justin Fields
+            
+    </fieldset>
+    <input class="btn" type="submit" id="DeleteTeamPlayer" value="Delete Team Player">
+          <input class="btn" type="button" value="cancel" onClick="browseTeamsPlayers()">
+  </form> 
+</div><!-- delete -->
+
+</body>
+</html>

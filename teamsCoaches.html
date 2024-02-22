@@ -104,7 +104,6 @@
     <form method="POST" id="addTeamCoach">
         <legend><strong>Add Team-Coach Relationship</strong></legend>
           <fieldset class="fields">
-            <label> Name </label> <input type="text" name="teamName">
             <label> Team </label> <select name="teamID">
             	<option value="0">&nbsp;</option>
                 <option value="1">Jets</option>
@@ -113,7 +112,7 @@
                 <option value="4">Rams</option>
                 <option value="5">Chargers</option>
                 </select>
-            <label> Coach </label> <select name="coachName">
+            <label> Coach </label> <select name="coachId">
                 <option value="0">&nbsp;</option>
                 <option value="1">Robert Salah</option>
                 <option value="2">Mike Tomlin</option>
@@ -122,7 +121,7 @@
                 </select>
       </fieldset>
           <input class="btn" type="submit" id="addTeam" value="Add Team Coach">
-          <input class="btn" type="button" value="cancel" onClick="browseTeams()">
+          <input class="btn" type="button" value="cancel" onClick="browseTeamsCoaches()">
 	</form> 
 </div><!-- insert -->
 <p>&nbsp;</p>
@@ -130,8 +129,7 @@
     <form method="POST" id="UpdateTeamCoach">
         <legend><strong>Update Team-Coach Relationship</strong></legend>
           <fieldset class="fields">
-            <label> Name </label> <input type="text" name="teamName">
-            <label> Team </label> <select name="teamID">
+            <label> Team </label> <select name="teamId">
             	<option value="0">&nbsp;</option>
                 <option value="1">Jets</option>
                 <option value="2">Giants</option>
@@ -139,7 +137,7 @@
                 <option value="4">Rams</option>
                 <option value="5">Chargers</option>
                 </select>
-            <label> Coach </label> <select name="coachName">
+            <label> Coach </label> <select name="coachId">
                 <option value="0">&nbsp;</option>
                 <option value="1">Robert Salah</option>
                 <option value="2">Mike Tomlin</option>
@@ -147,8 +145,8 @@
                 <option value="4">Rex Ryan</option>
                 </select>
       </fieldset>
-          <input class="btn" type="submit" id="UpdateSaveTeam" value="Save Update Team Coach">
-          <input class="btn" type="button" value="cancel" onClick="browseTeams()">
+          <input class="btn" type="submit" id="UpdateSaveTeamCoach" value="Save Update Team Coach">
+          <input class="btn" type="button" value="cancel" onClick="browseTeamsCoaches()">
 	</form> 
 </div><!-- update -->
 <p>&nbsp;</p>
@@ -158,13 +156,13 @@
           <fieldset class="fields">
           <p>Are you sure you wish to delete the following?</p>
           <input type="hidden" name="teamCoachID" id="deleteTeamCoachID" value="1">
-          <label><strong>ID:</strong></label> 1
-            <label> <strong>Team</strong> </label> Steelers
-            <label> <strong>Coach</strong> </label> Mike Tomlin
+          <label><strong>ID:</strong></label> 5
+            <label> <strong>Team</strong> </label> Chargers
+            <label> <strong>Coach</strong> </label> Rex Ryan
             
     </fieldset>
     <input class="btn" type="submit" id="DeleteTeamCoach" value="Delete Team Coach">
-          <input class="btn" type="button" value="cancel" onClick="browseTeams()">
+          <input class="btn" type="button" value="cancel" onClick="browseTeamsCoaches()">
   </form> 
 </div><!-- delete -->
 
