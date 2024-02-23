@@ -59,6 +59,8 @@
     <th><a href="#" onClick="newCoach()">New</a></th>
     <th></th>
     <th>ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
     <th>Salary</th>
     <th>Total Wins</th>
     <th>Total Games</th>
@@ -67,6 +69,8 @@
     <td><a href="#" onClick="updateCoach('this.coachID')">Edit</a></td>
     <td><a href="#" onclick="deleteCoach('this.coachID')">Delete</a></td>
     <td align="right" >1</td>
+    <td>John</td>
+    <td>Doe</td>
     <td >5,000,000</td>
     <td align="right" >18</td>
     <td align="right" >51</td>
@@ -75,6 +79,8 @@
     <td><a href="#" onClick="updateCoach('this.coachID')">Edit</a></td>
     <td><a href="#" onclick="deleteCoach('this.coachID')">Delete</a></td>
     <td align="right" >2</td>
+    <td>Jane</td>
+    <td>Smith</td>
     <td >3,000,000</td>
     <td align="right" >15</td>
     <td align="right" >34</td>
@@ -83,6 +89,8 @@
     <td><a href="#" onClick="updateCoach('this.coachID')">Edit</a></td>
     <td><a href="#" onclick="deleteCoach('this.coachID')">Delete</a></td>
     <td align="right" >3</td>
+    <td>Michael</td>
+    <td>Johnson</td>
     <td >12,500,000</td>
     <td align="right" >173</td>
     <td align="right" >275</td>
@@ -91,6 +99,8 @@
     <td><a href="#" onClick="updateCoach('this.coachID')">Edit</a></td>
     <td><a href="#" onclick="deleteCoach('this.coachID')">Delete</a></td>
     <td align="right" >4</td>
+    <td>Emily</td>
+    <td>Williams</td>
     <td >15,000,000</td>
     <td align="right" >70</td>
     <td align="right" >115</td>
@@ -99,6 +109,8 @@
     <td><a href="#" onClick="updateCoach('this.coachID')">Edit</a></td>
     <td><a href="#" onclick="deleteCoach('this.coachID')">Delete</a></td>
     <td align="right" >5</td>
+    <td>Christopher</td>
+    <td>Brown</td>
     <td >16,000,000</td>
     <td align="right" >44</td>
     <td align="right" >64</td>
@@ -110,9 +122,11 @@
     <form method="POST" id="addCoach">
         <legend><strong>Add Coach</strong></legend>
           <fieldset class="fields">
-            <label> Salary </label> <input type="text" name="salary">
-            <label> Total Wins </label> <input type="number" name="totalWins">
-            <label> Total Games </label> <input type="number" name="totalGames">
+            <label>First Name</label> <input type="text" name="firstName">
+            <label>Last Name</label> <input type="text" name="lastName">
+            <label>Salary</label> <input type="text" name="salary">
+            <label>Total Wins</label> <input type="number" name="totalWins">
+            <label>Total Games</label> <input type="number" name="totalGames">
       </fieldset>
           <input class="btn" type="submit" id="addCoach" value="Add Coach">
           <input class="btn" type="button" value="cancel" onClick="browseCoaches()">
@@ -124,12 +138,14 @@
         <legend><strong>Update Coach</strong></legend>
           <fieldset class="fields">
           <input type="hidden" name="coachID" id="updateCoachID" value="1">
-          <label> ID: </label> 1
-          <label> Salary </label> <input type="text" name="salary">
-          <label> Total Wins </label> <input type="number" name="totalWins">
-          <label> Total Games </label> <input type="number" name="totalGames">
+          <label>ID: </label> 1
+          <label>First Name</label> <input type="text" name="firstName">
+          <label>Last Name</label> <input type="text" name="lastName">
+          <label>Salary</label> <input type="text" name="salary">
+          <label>Total Wins</label> <input type="number" name="totalWins">
+          <label>Total Games</label> <input type="number" name="totalGames">
     </fieldset>
-        <input class="btn" type="submit" id="addCoach" value="Add Coach">
+        <input class="btn" type="submit" id="updateCoach" value="Update Coach">
         <input class="btn" type="button" value="cancel" onClick="browseCoaches()">
 	</form> 
 </div><!-- update -->

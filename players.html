@@ -56,9 +56,11 @@
 <p><a href="#" onClick="showAll()">Display all forms</a> </p>
 <table border="1" cellpadding="5">
   <tr>
-    <th><a href="#" onClick="newPerson()">New</a></th>
+    <th><a href="#" onClick="newPlayer()">New</a></th>
     <th></th>
     <th>ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
     <th>Salary</th>
     <th>Position</th>
   </tr>
@@ -66,6 +68,8 @@
     <td><a href="#" onClick="updatePlayer('this.playerID')">Edit</a></td>
     <td><a href="#" onclick="deletePlayer('this.playerID')">Delete</a></td>
     <td align="right" >1</td>
+    <td>John</td>
+    <td>Doe</td>
     <td >6,644,689</td>
     <td align="right" >QB</td>
   </tr>
@@ -73,6 +77,8 @@
     <td><a href="#" onClick="updatePlayer('this.playerID')">Edit</a></td>
     <td><a href="#" onclick="deletePlayer('this.playerID')">Delete</a></td>
     <td align="right" >2</td>
+    <td>Jane</td>
+    <td>Smith</td>
     <td >10,091,000</td>
     <td align="right" >RB</td>
   </tr>
@@ -80,6 +86,8 @@
     <td><a href="#" onClick="updatePlayer('this.playerID')">Edit</a></td>
     <td><a href="#" onclick="deletePlayer('this.playerID')">Delete</a></td>
     <td align="right" >3</td>
+    <td>Michael</td>
+    <td>Johnson</td>
     <td >1,688,045</td>
     <td align="right" >WR</td>
   </tr>
@@ -89,37 +97,43 @@
 <div id="insert">
     <form method="POST" id="addPlayer">
         <legend><strong>Add Player</strong></legend>
-          <fieldset class="fields">
-            <label> Salary </label> <input type="text" name="salary">
-            <label> Position </label> <select name="positionID">
-            	<option value="0">&nbsp;</option>
+        <fieldset class="fields">
+            <label>First Name</label> <input type="text" name="firstName">
+            <label>Last Name</label> <input type="text" name="lastName">
+            <label>Salary</label> <input type="text" name="salary">
+            <label>Position</label>
+            <select name="positionID">
+                <option value="0">&nbsp;</option>
                 <option value="1">QB</option>
                 <option value="2">RB</option>
                 <option value="3">WR</option>
-                </select>
-      </fieldset>
-          <input class="btn" type="submit" id="addPlayer" value="Add Player">
-          <input class="btn" type="button" value="cancel" onClick="browsePlayers()">
-	</form> 
+            </select>
+        </fieldset>
+        <input class="btn" type="submit" id="addPlayer" value="Add Player">
+        <input class="btn" type="button" value="cancel" onClick="browsePlayers()">
+    </form> 
 </div><!-- insert -->
 <p>&nbsp;</p>
 <div id="update">
     <form method="POST" id="UpdatePlayer">
         <legend><strong>Update Player</strong></legend>
-          <fieldset class="fields">
-          <input type="hidden" name="personID" id="updatePlayerID" value="1">
-          <label> ID: </label> 1
-          <label> Salary </label> <input type="text" name="salary">
-          <label> Position </label> <select name="positionID">
-            <option value="0">&nbsp;</option>
-              <option value="1">QB</option>
-              <option value="2">RB</option>
-              <option value="3">WR</option>
-              </select>
-    </fieldset>
-        <input class="btn" type="submit" id="addPlayer" value="Add Player">
+        <fieldset class="fields">
+            <input type="hidden" name="playerID" id="updatePlayerID" value="1">
+            <label>ID: </label> 1
+            <label>First Name</label> <input type="text" name="firstName">
+            <label>Last Name</label> <input type="text" name="lastName">
+            <label>Salary</label> <input type="text" name="salary">
+            <label>Position</label>
+            <select name="positionID">
+                <option value="0">&nbsp;</option>
+                <option value="1">QB</option>
+                <option value="2">RB</option>
+                <option value="3">WR</option>
+            </select>
+        </fieldset>
+        <input class="btn" type="submit" id="updatePlayer" value="Update Player">
         <input class="btn" type="button" value="cancel" onClick="browsePlayers()">
-	</form> 
+    </form> 
 </div><!-- update -->
 <p>&nbsp;</p>
 <div id="delete" style="display: block">

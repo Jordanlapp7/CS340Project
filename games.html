@@ -59,6 +59,8 @@
     <th><a href="#" onClick="newGame()">New</a></th>
     <th></th>
     <th>ID</th>
+    <th>Year</th>
+    <th>Week</th>
     <th>Home Team Score</th>
     <th>Away Team Score</th>
     <th>Home Team Total Yards</th>
@@ -68,6 +70,8 @@
     <td><a href="#" onClick="updateGame('this.gameID')">Edit</a></td>
     <td><a href="#" onclick="deleteGame('this.gameID')">Delete</a></td>
     <td align="right" >1</td>
+    <td>2024</td>
+    <td>1</td>
     <td>17</td>
     <td>24</td>
     <td>354</td>
@@ -77,6 +81,8 @@
     <td><a href="#" onClick="updateGame('this.gameID')">Edit</a></td>
     <td><a href="#" onclick="deleteGame('this.gameID')">Delete</a></td>
     <td align="right" >2</td>
+    <td>2024</td>
+    <td>1</td>
     <td>6</td>
     <td>27</td>
     <td>270</td>
@@ -86,6 +92,8 @@
     <td><a href="#" onClick="updateGame('this.gameID')">Edit</a></td>
     <td><a href="#" onclick="deleteGame('this.gameID')">Delete</a></td>
     <td align="right" >3</td>
+    <td>2024</td>
+    <td>2</td>
     <td>25</td>
     <td>26</td>
     <td>389</td>
@@ -98,6 +106,8 @@
     <form method="POST" id="addGame">
         <legend><strong>Add Game</strong></legend>
           <fieldset class="fields">
+            <label> Year </label> <input type="number" name="year">
+            <label> Week </label> <input type="number" name="week">
             <label> Home Team Score </label> <input type="number" name="homeTeamScore">
             <label> Away Team Score </label> <input type="number" name="awayTeamScore">
             <label> Home Team Total Yards </label> <input type="number" name="homeTeamTotalYards">
@@ -109,17 +119,19 @@
 </div><!-- insert -->
 <p>&nbsp;</p>
 <div id="update">
-    <form method="POST" id="UpdatePerson">
-        <legend><strong>Update Person</strong></legend>
+    <form method="POST" id="UpdateGame">
+        <legend><strong>Update Game</strong></legend>
           <fieldset class="fields">
-          <input type="hidden" name="personID" id="updatepersonID" value="1">
+          <input type="hidden" name="gameID" id="updateGameID" value="1">
           <label> ID: </label> 1
+          <label> Year </label> <input type="number" name="year">
+          <label> Week </label> <input type="number" name="week">
           <label> Home Team Score </label> <input type="number" name="homeTeamScore">
           <label> Away Team Score </label> <input type="number" name="awayTeamScore">
           <label> Home Team Total Yards </label> <input type="number" name="homeTeamTotalYards">
           <label> Away Team Total Yards </label> <input type="number" name="awayTeamTotalYards">
     </fieldset>
-        <input class="btn" type="submit" id="addGame" value="Add Game">
+        <input class="btn" type="submit" id="updateGame" value="Update Game">
         <input class="btn" type="button" value="cancel" onClick="browseGames()">
 	</form> 
 </div><!-- update -->
@@ -129,11 +141,11 @@
       <legend><strong>Delete Game</strong></legend>
           <fieldset class="fields">
           <p>Are you sure you wish to delete the following?</p>
-          <input type="hidden" name="personID" id="deletepersonID" value="1">
+          <input type="hidden" name="gameID" id="deleteGameID" value="1">
           <label><strong>ID:</strong></label> 1
             
     </fieldset>
-    <input class="btn" type="submit" id="DeleteGame" value="Delete Game">
+    <input class="btn" type="submit" id="deleteGame" value="Delete Game">
           <input class="btn" type="button" value="cancel" onClick="browseGames()">
   </form> 
 </div><!-- delete -->
