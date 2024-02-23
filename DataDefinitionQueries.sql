@@ -41,6 +41,8 @@ CREATE TABLE Stadiums (
 -- Create Players table
 CREATE TABLE Players (
     playerID INT AUTO_INCREMENT UNIQUE NOT NULL,
+    fname VARCHAR(45),
+    lname VARCHAR(45),
     positionID VARCHAR(45),
     salary DECIMAL(10,2),
     PRIMARY KEY (playerID),
@@ -49,6 +51,8 @@ CREATE TABLE Players (
 -- Create Coaches table
 CREATE TABLE Coaches (
     coachID INT AUTO_INCREMENT UNIQUE NOT NULL,
+    fname VARCHAR(45),
+    lname VARCHAR(45),
     salary DECIMAL(10,2),
     totalWins INT NOT NULL,
     totalGames INT NOT NULL,
@@ -58,6 +62,8 @@ CREATE TABLE Coaches (
 -- Create Games table
 CREATE TABLE Games (
     gameID INT AUTO_INCREMENT UNIQUE NOT NULL,
+    season YEAR NOT NULL,
+    weekNum INT NOT NULL,
     homeTeamScore INT NOT NULL,
     awayTeamScore INT NOT NULL,
     totalHomeYards INT NOT NULL,
@@ -122,13 +128,13 @@ VALUES
 (5, 'Chargers', 3, '1959-08-14', 483, 983);
 
 -- Coaches table data
-INSERT INTO Coaches (coachID, salary, totalWins, totalGames)
+INSERT INTO Coaches (coachID, fname, lname, salary, totalWins, totalGames)
 VALUES
-(1, 5000000, 18, 51),
-(2, 3000000, 15, 34),
-(3, 12500000, 173, 275),
-(4, 15000000, 70, 115),
-(5, 16000000, 44, 64);
+(1, 'John', 'Doe' 5000000, 18, 51),
+(2, 'Jane', 'Smith' 3000000, 15, 34),
+(3, 'Michael', 'Johnson' 12500000, 173, 275),
+(4, 'Emily', 'Williams' 15000000, 70, 115),
+(5, 'Christopher', 'Brown' 16000000, 44, 64);
 
 -- Positions table data
 INSERT INTO Positions (positionID, description)
@@ -140,18 +146,18 @@ VALUES
 ('LB', 'Linebackers play a versatile role on defense, responsible for stopping the run, covering pass routes, and rushing the quarterback.');
 
 -- Players table data
-INSERT INTO Players (playerID, salary, positionID)
+INSERT INTO Players (playerID, fname, lname, salary, positionID)
 VALUES
-(1, 6644689, 'QB'),
-(2, 10091000, 'RB'),
-(3, 1688045, 'WR');
+(1, 'John', 'Doe' 6644689, 'QB'),
+(2, 'Jane', 'Smith' 10091000, 'RB'),
+(3, 'Michael', 'Johnson' 1688045, 'WR');
 
 -- Games table data
-INSERT INTO Games (gameID, homeTeamScore, awayTeamScore, totalHomeYards, totalAwayYards)
+INSERT INTO Games (gameID, season, weekNum, homeTeamScore, awayTeamScore, totalHomeYards, totalAwayYards)
 VALUES
-(1, 17, 24, 354, 300),
-(2, 6, 27, 270, 191),
-(3, 25, 26, 389, 391);
+(1, 2024, 1, 17, 24, 354, 300),
+(2, 2024, 1, 6, 27, 270, 191),
+(3, 2024, 2, 25, 26, 389, 391);
 
 -- TeamsPlayers table data
 INSERT INTO TeamsPlayers (teamPlayerID, teamID, playerID)
