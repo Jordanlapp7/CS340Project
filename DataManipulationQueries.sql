@@ -22,20 +22,6 @@ FROM Players
 JOIN Positions ON Players.positionID = Positions.positionID
 WHERE Positions.description = :positionDescriptionInput;
 
--- Selecting all stats by playerID
-SELECT * FROM PlayerStats WHERE playerID = :playerIDInput;
-
--- Selecting all stats by playerID and gameID
-SELECT * FROM PlayerStats WHERE playerID = :playerIDInput AND gameID = :gameIDInput;
-
--- Selecting all player stats by teamID and gameID
-SELECT *
-FROM PlayerStats
-JOIN TeamsPlayers ON PlayerStats.playerID = TeamsPlayers.playerID
-JOIN Teams ON TeamsPlayers.teamID = Teams.teamID
-JOIN TeamsGames ON Teams.teamID = TeamsGames.teamID
-WHERE Teams.teamID = :teamIDInput AND TeamsGames.gameID = :gameIDInput;
-
 -- Selecting ALL Coaches
 SELECT * FROM Coaches;
 
@@ -53,12 +39,6 @@ SELECT *
 FROM Games
 JOIN TeamsGames ON Games.gameID = TeamsGames.gameID
 WHERE TeamsGames.teamID = :teamIDInput;
-
--- Selecting all player stats by teamID and gameID
-SELECT *
-FROM PlayerStats
-JOIN TeamsGames ON PlayerStats.gameID = TeamsGames.gameID
-WHERE TeamsGames.teamID = :teamIDInput AND TeamsGames.gameID = :gameIDInput;
 
 -- Selecting ALL Positions
 SELECT * FROM Positions;
@@ -106,20 +86,16 @@ INSERT INTO Teams (teamName, stadiumID, inception, totalWins, totalGames)
 VALUES (:teamNameInput, :stadiumIDInput, :inceptionInput, :totalWinsInput, :totalGamesInput);
 
 -- Inserting a player
-INSERT INTO Players(playerID, positionID, salary)
-VALUES (:playerIDInput, :positionIDInput, :salaryInput);
+INSERT INTO Players(playerID, fname, lname, positionID, salary)
+VALUES (:playerIDInput, :fnameInput, :lnameInput, :positionIDInput, :salaryInput);
 
 -- Inserting a new coach
-INSERT INTO Coaches(coachID, salary, totalWins, totalGames)
-VALUES (:coachIDInput, :salaryInput, :totalWinsInput, :totalGamesInput);
+INSERT INTO Coaches(coachID, fname, lname, salary, totalWins, totalGames)
+VALUES (:coachIDInput, :fnameInput, :lnameInput, :salaryInput, :totalWinsInput, :totalGamesInput);
 
 -- Inserting a new game
-INSERT INTO Games(homeTeamScore, awayTeamScore, totalHomeYards, totalAwayYards)
-VALUES (:homeTeamScoreInput, :awayTeamScoreInput, :totalHomeYardsInput, :totalAwayYardsInput);
-
--- Inserting a player's game stats
-INSERT INTO PlayerStats(gameID, playerID, points, assists, rebounds, fgAttempts, fgMade, ftAttempts, ftMade, threePointAttempts, threePointMade, blocks, steals, fouls, minutes)
-VALUES (:gameIDInput, :playerIDInput, :pointsInput, :assistsInput, :reboundsInput, :fgAttemptsInput, :fgMadeInput, :ftAttemptsInput, :ftMadeInput, :threePointAttemptsInput, :threePointMadeInput, :blocksInput, :stealsInput, :foulsInput, :minutesInput);
+INSERT INTO Games(season, weekNum, homeTeamScore, awayTeamScore, totalHomeYards, totalAwayYards)
+VALUES (:seasonInput, :weekNumInput, :homeTeamScoreInput, :awayTeamScoreInput, :totalHomeYardsInput, :totalAwayYardsInput);
 
 -- Inserting a new stadium 
 INSERT INTO Stadiums (location, capacity, indoors)
