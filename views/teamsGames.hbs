@@ -1,0 +1,175 @@
+<html>
+<head>
+<title>National Football League General Database</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newTeamGame() { showform('insert'); }
+    function updateTeamGame(pid) { showform('update'); }
+    function deleteTeamGame(pid) { showform ('delete'); }
+    function browseTeamsGames() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseTeamsGames()">
+
+<h2>Team-Game Relationships</h2>
+<div id="browse">
+<p><a href="#" onClick="showAll()">Display all forms</a> </p>
+<table border="1" cellpadding="5">
+  <tr>
+    <th><a href="#" onClick="newTeam()">New</a></th>
+    <th></th>
+    <th>ID</th>
+    <th>Team</th>
+    <th>Opponent</th>
+    <th>Game</th>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTeamGame('this.teamGameID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTeamGame('this.teamGameID')">Delete</a></td>
+    <td >1</td>
+    <td>Steelers</td>
+    <td>Rams</td>
+    <td>Week 16, 2022</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTeamGame('this.teamGameID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTeamGame('this.teamGameID')">Delete</a></td>
+    <td >1</td>
+    <td>Steelers</td>
+    <td>Chargers</td>
+    <td>Week 17, 2023</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTeamGame('this.teamGameID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTeamGame('this.teamGameID')">Delete</a></td>
+    <td >2</td>
+    <td>Rams</td>
+    <td>Steelers</td>
+    <td>Week 16, 2022</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTeamGame('this.teamGameID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTeamGame('this.teamGameID')">Delete</a></td>
+    <td >3</td>
+    <td>Chargers</td>
+    <td>Jets</td>
+    <td>Week 7, 2019</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTeamGame('this.teamGameID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTeamGame('this.teamGameID')">Delete</a></td>
+    <td >1</td>
+    <td>Giants</td>
+    <td>Jets</td>
+    <td>Week 4, 2020</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST" id="addTeamGame">
+        <legend><strong>Add Team-Game Relationship</strong></legend>
+          <fieldset class="fields">
+            <label> Team </label> <select name="teamID">
+            	<option value="0">&nbsp;</option>
+                <option value="1">Jets</option>
+                <option value="2">Giants</option>
+                <option value="3">Steelers</option>
+                <option value="4">Rams</option>
+                <option value="5">Chargers</option>
+                </select>
+            <label> Coach </label> <select name="gameId">
+                <option value="0">&nbsp;</option>
+                <option value="1">Week 16, 2022</option>
+                <option value="2">Week 17, 2023</option>
+                <option value="3">Week 8, 2019</option>
+                <option value="4">Week 4, 2020</option>
+                </select>
+      </fieldset>
+          <input class="btn" type="submit" id="addTeamGame" value="Add Team Game">
+          <input class="btn" type="button" value="cancel" onClick="browseTeamsGames()">
+	</form> 
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+    <form method="POST" id="updateTeamGame">
+        <legend><strong>Update Team-Game Relationship</strong></legend>
+          <fieldset class="fields">
+            <label> Team </label> <select name="teamID">
+            	<option value="0">&nbsp;</option>
+                <option value="1">Jets</option>
+                <option value="2">Giants</option>
+                <option value="3">Steelers</option>
+                <option value="4">Rams</option>
+                <option value="5">Chargers</option>
+                </select>
+            <label> Coach </label> <select name="gameId">
+                <option value="0">&nbsp;</option>
+                <option value="1">Week 16, 2022</option>
+                <option value="2">Week 17, 2023</option>
+                <option value="3">Week 8, 2019</option>
+                <option value="4">Week 4, 2020</option>
+                </select>
+      </fieldset>
+          <input class="btn" type="submit" id="addTeamGame" value="Add Team Game">
+          <input class="btn" type="button" value="cancel" onClick="browseTeamsGames()">
+	</form> 
+</div><!-- update -->
+<p>&nbsp;</p>
+<div id="delete" style="display: block">
+  <form method="POST" id="deleteTeamGame">
+      <legend><strong>Delete Team-Game Relationship</strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <input type="hidden" name="teamGameID" id="deleteTeamGameID" value="1">
+          <label><strong>ID:</strong></label> 1
+            <label> <strong>Team</strong> </label> Steelers
+            <label> <strong>Opponent</strong> </label> Rams
+            <label> <strong>Game</strong> </label> Week 16, 2022
+            
+    </fieldset>
+    <input class="btn" type="submit" id="DeleteTeamGame" value="Delete Team Game">
+          <input class="btn" type="button" value="cancel" onClick="browseTeamsGames()">
+  </form> 
+</div><!-- delete -->
+
+</body>
+</html>

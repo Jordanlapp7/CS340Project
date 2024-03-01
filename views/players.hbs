@@ -1,0 +1,152 @@
+<html>
+<head>
+<title>National Football League General Database</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newPlayer() { showform('insert'); }
+    function updatePlayer(pid) { showform('update'); }
+    function deletePlayer(pid) { showform ('delete'); }
+    function browsePlayers() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browsePlayers()">
+
+<h2>Players</h2>
+<div id="browse">
+<p><a href="#" onClick="showAll()">Display all forms</a> </p>
+<table border="1" cellpadding="5">
+  <tr>
+    <th><a href="#" onClick="newPlayer()">New</a></th>
+    <th></th>
+    <th>ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Salary</th>
+    <th>Position</th>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updatePlayer('this.playerID')">Edit</a></td>
+    <td><a href="#" onclick="deletePlayer('this.playerID')">Delete</a></td>
+    <td align="right" >1</td>
+    <td>John</td>
+    <td>Doe</td>
+    <td >6,644,689</td>
+    <td align="right" >QB</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updatePlayer('this.playerID')">Edit</a></td>
+    <td><a href="#" onclick="deletePlayer('this.playerID')">Delete</a></td>
+    <td align="right" >2</td>
+    <td>Jane</td>
+    <td>Smith</td>
+    <td >10,091,000</td>
+    <td align="right" >RB</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updatePlayer('this.playerID')">Edit</a></td>
+    <td><a href="#" onclick="deletePlayer('this.playerID')">Delete</a></td>
+    <td align="right" >3</td>
+    <td>Michael</td>
+    <td>Johnson</td>
+    <td >1,688,045</td>
+    <td align="right" >WR</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST" id="addPlayer">
+        <legend><strong>Add Player</strong></legend>
+        <fieldset class="fields">
+            <label>First Name</label> <input type="text" name="firstName">
+            <label>Last Name</label> <input type="text" name="lastName">
+            <label>Salary</label> <input type="text" name="salary">
+            <label>Position</label>
+            <select name="positionID">
+                <option value="0">&nbsp;</option>
+                <option value="1">QB</option>
+                <option value="2">RB</option>
+                <option value="3">WR</option>
+            </select>
+        </fieldset>
+        <input class="btn" type="submit" id="addPlayer" value="Add Player">
+        <input class="btn" type="button" value="cancel" onClick="browsePlayers()">
+    </form> 
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+    <form method="POST" id="UpdatePlayer">
+        <legend><strong>Update Player</strong></legend>
+        <fieldset class="fields">
+            <input type="hidden" name="playerID" id="updatePlayerID" value="1">
+            <label>ID: </label> 1
+            <label>First Name</label> <input type="text" name="firstName">
+            <label>Last Name</label> <input type="text" name="lastName">
+            <label>Salary</label> <input type="text" name="salary">
+            <label>Position</label>
+            <select name="positionID">
+                <option value="0">&nbsp;</option>
+                <option value="1">QB</option>
+                <option value="2">RB</option>
+                <option value="3">WR</option>
+            </select>
+        </fieldset>
+        <input class="btn" type="submit" id="updatePlayer" value="Update Player">
+        <input class="btn" type="button" value="cancel" onClick="browsePlayers()">
+    </form> 
+</div><!-- update -->
+<p>&nbsp;</p>
+<div id="delete" style="display: block">
+  <form method="POST" id="deletePlayer">
+      <legend><strong>Delete Player</strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <input type="hidden" name="playerID" id="deletePlayerID" value="1">
+          <label><strong>ID:</strong></label> 1
+            
+    </fieldset>
+    <input class="btn" type="submit" id="DeletePlayer" value="Delete Player">
+          <input class="btn" type="button" value="cancel" onClick="browsePlayers()">
+  </form> 
+</div><!-- delete -->
+
+</body>
+</html>

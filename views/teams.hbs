@@ -1,0 +1,145 @@
+<html>
+<head>
+<title>National Football League General Database</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newTeam() { showform('insert'); }
+    function updateTeam(pid) { showform('update'); }
+    function deleteTeam(pid) { showform ('delete'); }
+    function browseTeams() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseTeams()">
+
+<h2>Teams</h2>
+
+<div id="browse">
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th><a href="#" onClick="newTeam()">New</a></th>
+        <th></th>
+        {{#each data.[0]}}
+        <th>
+          {{@key}}
+        </th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td><a href="#" onClick="updateTeam('this.teamID')">Edit</a></td>
+        <td><a href="#" onclick="deleteTeam('this.teamID')">Delete</a></td>
+        <td>{{this.teamID}}</td>
+        <td>{{this.teamName}}</td>
+        <td>{{this.stadiumID}}</td>
+        <td>{{this.inception}}</td>
+        <td>{{this.totalWins}}</td>
+        <td>{{this.totalGames}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<p><a href="#" onClick="showAll()">Display all forms</a> </p>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST" id="addTeam" action="/addTeam">
+        <legend><strong>Add Team</strong></legend>
+          <fieldset class="fields">
+            <label> Name </label> <input type="text" name="teamNameInput">
+            <label> Stadium </label> <select name="stadiumIDInput">
+            	<option value="0">&nbsp;</option>
+                <option value="1">East Rutherford</option>
+                <option value="2">Pittsburgh</option>
+                <option value="3">Inglewood</option>
+                </select>
+              <label> Inception </label> <input type="date" name="inceptionInput">
+              <label> Total Wins </label> <input type="number" name="totalWinsInput">
+              <label> Total Games </label> <input type="number" name="totalGamesInput">
+      </fieldset>
+          <input class="btn" type="submit" id="addTeam" value="Add Team">
+          <input class="btn" type="button" value="cancel" onClick="browseTeams()">
+	</form> 
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+    <form method="POST" id="UpdateTeam">
+        <legend><strong>Update Team</strong></legend>
+          <fieldset class="fields">
+          <input type="hidden" name="TeamID" id="updateTeamID" value="1">
+          <label> ID: </label> 1
+          <label> Name </label> <input type="text" name="teamName">
+          <label> Stadium </label> <select name="stadiumID">
+            <option value="0">&nbsp;</option>
+              <option value="1">East Rutherford</option>
+              <option value="2">Pittsburgh</option>
+              <option value="3">Inglewood</option>
+              </select>
+            <label> Inception </label> <input type="date" name="inception">
+            <label> Total Wins </label> <input type="number" name="totalWins">
+            <label> Total Games </label> <input type="number" name="totalGames">
+      </fieldset>
+          <input class="btn" type="submit" id="UpdateSaveTeam" value="Save Update Team">
+          <input class="btn" type="button" value="cancel" onClick="browseTeams()">
+	</form> 
+</div><!-- update -->
+<p>&nbsp;</p>
+<div id="delete" style="display: block">
+  <form method="POST" id="deleteTeam">
+      <legend><strong>Delete Team</strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <input type="hidden" name="teamID" id="deleteTeamID" value="1">
+          <label><strong>ID:</strong></label> 1
+            <label> <strong>Name</strong> </label> Jets
+            
+    </fieldset>
+    <input class="btn" type="submit" id="DeleteTeam" value="Delete Team">
+          <input class="btn" type="button" value="cancel" onClick="browseTeams()">
+  </form> 
+</div><!-- delete -->
+
+</body>
+</html>
