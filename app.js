@@ -34,58 +34,86 @@ app.get('/', function(req, res)
         res.render('index');                    // Note the call to render() and not send(). Using render() ensures the templating engine
     });                                         // will process this file, before sending the finished HTML to the client.
 
-app.get('/teams.hbs', function(req, res)
+    app.get('/teams.hbs', function(req, res)
     {
         let query1 = "SELECT * FROM Teams;"
-
+    
         db.pool.query(query1, function(error, rows, fields){
             res.render('teams', {data: rows})
         })
     });
 
-app.post('/addTeam', function(req, res){
-    // Capture the incoming data and parse it back to a JS object
-    let data = req.body;
-
-    // Capture NULL values
-    let stadiumID = parseInt(data['stadiumIDInput']);
-    if (isNaN(stadiumID))
-    {
-        stadiumID = 'NULL'
+    app.post('/addTeam', function(req, res){
+        // Capture the incoming data and parse it back to a JS object
+        let data = req.body;
+    
+        // Capture NULL values
+        let stadiumID = parseInt(data['stadiumIDInput']);
+        if (isNaN(stadiumID))
+        {
+            stadiumID = 'NULL'
+        }
+    
+        let totalWins = parseInt(data['totalWinsInput']);
+        if (isNaN(totalWins))
+        {
+            totalWins = 'NULL'
+        }
+    
+        let totalGames = parseInt(data['totalGamesInput']);
+        if (isNaN(totalGames))
+        {
+            totalGames = 'NULL'
     }
 
-    let totalWins = parseInt(data['totalWinsInput']);
-    if (isNaN(totalWins))
-    {
-        totalWins = 'NULL'
-    }
+    // Create and run the query on the database
+    let query = `UPDATE Teams SET teamName = '${data['teamNameInput']}', stadiumID = ${stadiumID}, inception = '${data['inceptionInput']}', totalWins = ${totalWins}, totalGames = ${totalGames} WHERE teamID = ${teamID}`;
+    db.pool.query(query, function(error, rows, fields){
 
-    let totalGames = parseInt(data['totalGamesInput']);
-    if (isNaN(totalGames))
-    {
-        totalGames = 'NULL'
-    }
-
-    // Create the query and run it on the database
-    query1 = `INSERT INTO Teams (teamName, stadiumID, inception, totalWins, totalGames) VALUES ('${data['teamNameInput']}', ${stadiumID}, '${data['inceptionInput']}', ${totalWins}, ${totalGames})`;
-    db.pool.query(query1, function(error, rows, fields){
-
-        // Check to see if there was an error
+        // Check for errors
         if (error) {
 
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            // Log the error and send the visitor an HTTP response 400 indicating it was a bad request.
             console.log(error)
             res.sendStatus(400);
         }
 
-        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
-        // presents it on the screen
+        // If there's no errors, it will redirect back to our root route and run the SELECT * FROM bsg_people 
         else
         {
             res.redirect('/teams.hbs');
         }
     })
-})
+});
+
+// DELETE an existing team
+app.delete('/deleteTeam/:teamID', function(req, res){
+    let teamID = req.params.teamID;
+
+    // Create sand run the query on the database
+    let query = `DELETE FROM Teams WHERE teamID = ${teamID}`;
+    db.pool.query(query, function(error, rows, fields){
+
+        // Check for errors
+        if (error) {
+
+            // Log the error and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        // If there's no errors, it will redirect back to our root route and run the SELECT * FROM bsg_people 
+        else
+        {
+            res.redirect('/teams.hbs');
+        }
+    })
+});
+
+app.get('/', function(req, res)
+    {
+        res.render('index');                    
+    });                                        
 
 app.get('/players.hbs', function(req, res)
     {
