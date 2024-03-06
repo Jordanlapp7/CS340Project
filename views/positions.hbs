@@ -7,23 +7,30 @@
 
 <body>
 
-
 <h2>Positions</h2>
+
 <div id="browse">
-<table border="1" cellpadding="5">
-  <tr>
-    <th>Position</th>
-  </tr>
-  <tr>
-    <td>QB</td>
-  </tr>
-  <tr>
-    <td>WR</td>
-  </tr>
-  <tr>
-    <td>RB</td>
-  </tr>
-</table>
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        {{#each data.[0]}}
+        <th>
+          {{@key}}
+        </th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td>{{this.positionID}}</td>
+        <td>{{this.description}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
 <p>&nbsp;</p>
 </div> <!-- browse -->
 

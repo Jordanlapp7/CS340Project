@@ -538,9 +538,13 @@ app.get('/stadiums.hbs', function(req, res)
         res.render('stadiums')
     });
 
-app.get('/positions.hbs', function(req, res)
+    app.get('/positions.hbs', function(req, res)
     {
-        res.render('positions')
+        let query1 = "SELECT * FROM Positions;"
+    
+        db.pool.query(query1, function(error, rows, fields){
+            res.render('positions', {data: rows})
+        })
     });
 
 /*
