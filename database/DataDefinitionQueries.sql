@@ -66,8 +66,8 @@ CREATE TABLE Games (
     weekNum INT NOT NULL,
     homeTeamScore INT NOT NULL,
     awayTeamScore INT NOT NULL,
-    totalHomeYards INT NOT NULL,
-    totalAwayYards INT NOT NULL,
+    homeTeamTotalYards INT NOT NULL,
+    awayTeamTotalYards INT NOT NULL,
     PRIMARY KEY (gameID)
 );
 
@@ -153,7 +153,7 @@ VALUES
 (3, 'Michael', 'Johnson', 1688045, 'WR');
 
 -- Games table data
-INSERT INTO Games (gameID, season, weekNum, homeTeamScore, awayTeamScore, totalHomeYards, totalAwayYards)
+INSERT INTO Games (gameID, season, weekNum, homeTeamScore, awayTeamScore, homeTeamTotalYards, awayTeamTotalYards)
 VALUES
 (1, 2024, 1, 17, 24, 354, 300),
 (2, 2024, 1, 6, 27, 270, 191),

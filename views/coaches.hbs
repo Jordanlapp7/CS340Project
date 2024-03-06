@@ -40,8 +40,14 @@
 			}
 		}
     function newCoach() { showform('insert'); }
-    function updateCoach(pid) { showform('update'); }
-    function deleteCoach(pid) { showform ('delete'); }
+    function updateCoach(pid) { 
+      document.getElementById('updateCoachID').value = pid;
+      showform('update')
+    }
+    function deleteCoach(pid) { 
+      document.getElementById('deleteCoachID').value = pid;
+      showform ('delete'); 
+    }
     function browseCoaches() { showform ('browse'); }
     function showAll() { showform ('all'); }
 </script>
@@ -50,81 +56,49 @@
 <body onload="browseCoaches()">
 
 <h2>Coaches</h2>
+
 <div id="browse">
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th><a href="#" onClick="newCoach()">New</a></th>
+        <th></th>
+        {{#each data.[0]}}
+        <th>
+          {{@key}}
+        </th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td><a href="#" onClick="updateCoach('{{this.coachID}}')">Edit</a></td>
+        <td><a href="#" onclick="deleteCoach('{{this.coachID}}', '{{this.coachName}}')">Delete</a></td>
+        <td>{{this.coachID}}</td>
+        <td>{{this.fname}}</td>
+        <td>{{this.lname}}</td>
+        <td>{{this.salary}}</td>
+        <td>{{this.totalWins}}</td>
+        <td>{{this.totalGames}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
 <p><a href="#" onClick="showAll()">Display all forms</a> </p>
-<table border="1" cellpadding="5">
-  <tr>
-    <th><a href="#" onClick="newCoach()">New</a></th>
-    <th></th>
-    <th>ID</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Salary</th>
-    <th>Total Wins</th>
-    <th>Total Games</th>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateCoach('this.coachID')">Edit</a></td>
-    <td><a href="#" onclick="deleteCoach('this.coachID')">Delete</a></td>
-    <td align="right" >1</td>
-    <td>John</td>
-    <td>Doe</td>
-    <td >5,000,000</td>
-    <td align="right" >18</td>
-    <td align="right" >51</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateCoach('this.coachID')">Edit</a></td>
-    <td><a href="#" onclick="deleteCoach('this.coachID')">Delete</a></td>
-    <td align="right" >2</td>
-    <td>Jane</td>
-    <td>Smith</td>
-    <td >3,000,000</td>
-    <td align="right" >15</td>
-    <td align="right" >34</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateCoach('this.coachID')">Edit</a></td>
-    <td><a href="#" onclick="deleteCoach('this.coachID')">Delete</a></td>
-    <td align="right" >3</td>
-    <td>Michael</td>
-    <td>Johnson</td>
-    <td >12,500,000</td>
-    <td align="right" >173</td>
-    <td align="right" >275</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateCoach('this.coachID')">Edit</a></td>
-    <td><a href="#" onclick="deleteCoach('this.coachID')">Delete</a></td>
-    <td align="right" >4</td>
-    <td>Emily</td>
-    <td>Williams</td>
-    <td >15,000,000</td>
-    <td align="right" >70</td>
-    <td align="right" >115</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateCoach('this.coachID')">Edit</a></td>
-    <td><a href="#" onclick="deleteCoach('this.coachID')">Delete</a></td>
-    <td align="right" >5</td>
-    <td>Christopher</td>
-    <td>Brown</td>
-    <td >16,000,000</td>
-    <td align="right" >44</td>
-    <td align="right" >64</td>
-  </tr>
-</table>
 <p>&nbsp;</p>
 </div> <!-- browse -->
 <div id="insert">
-    <form method="POST" id="addCoach">
+    <form method="POST" id="addCoach" action="/addCoach">
         <legend><strong>Add Coach</strong></legend>
           <fieldset class="fields">
-            <label>First Name</label> <input type="text" name="firstName">
-            <label>Last Name</label> <input type="text" name="lastName">
-            <label>Salary</label> <input type="text" name="salary">
-            <label>Total Wins</label> <input type="number" name="totalWins">
-            <label>Total Games</label> <input type="number" name="totalGames">
+            <label>First Name</label> <input type="text" name="fnameInput">
+            <label>Last Name</label> <input type="text" name="lnameInput">
+            <label>Salary</label> <input type="text" name="salaryInput">
+            <label>Total Wins</label> <input type="number" name="totalWinsInput">
+            <label>Total Games</label> <input type="number" name="totalGamesInput">
       </fieldset>
           <input class="btn" type="submit" id="addCoach" value="Add Coach">
           <input class="btn" type="button" value="cancel" onClick="browseCoaches()">
@@ -132,16 +106,16 @@
 </div><!-- insert -->
 <p>&nbsp;</p>
 <div id="update">
-    <form method="POST" id="UpdateCoach">
+    <form method="POST" id="UpdateCoach" action="/updateCoach">
         <legend><strong>Update Coach</strong></legend>
           <fieldset class="fields">
-          <input type="hidden" name="coachID" id="updateCoachID" value="1">
+          <input type="hidden" name="coachID" id="updateCoachID" value="">
           <label>ID: </label> 1
-          <label>First Name</label> <input type="text" name="firstName">
-          <label>Last Name</label> <input type="text" name="lastName">
-          <label>Salary</label> <input type="text" name="salary">
-          <label>Total Wins</label> <input type="number" name="totalWins">
-          <label>Total Games</label> <input type="number" name="totalGames">
+          <label>First Name</label> <input type="text" name="fnameInput">
+          <label>Last Name</label> <input type="text" name="lnameInput">
+          <label>Salary</label> <input type="text" name="salaryInput">
+          <label>Total Wins</label> <input type="number" name="totalWinsInput">
+          <label>Total Games</label> <input type="number" name="totalGamesInput">
     </fieldset>
         <input class="btn" type="submit" id="updateCoach" value="Update Coach">
         <input class="btn" type="button" value="cancel" onClick="browseCoaches()">
@@ -149,12 +123,12 @@
 </div><!-- update -->
 <p>&nbsp;</p>
 <div id="delete" style="display: block">
-  <form method="POST" id="deleteCoach">
+  <form method="POST" id="deleteCoach" action="/deleteCoach">
       <legend><strong>Delete Coach</strong></legend>
           <fieldset class="fields">
           <p>Are you sure you wish to delete the following?</p>
-          <input type="hidden" name="coachID" id="deleteCoachID" value="1">
-          <label><strong>ID:</strong></label> 1
+          <input type="hidden" name="coachID" id="deleteCoachID" value="1"> {{deletecoachID}}
+          <label><strong>ID:</strong></label> {{this.coachName}}
             
     </fieldset>
     <input class="btn" type="submit" id="DeleteCoach" value="Delete Coach">
