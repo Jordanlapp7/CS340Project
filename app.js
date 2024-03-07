@@ -533,9 +533,111 @@ app.get('/teamsGames.hbs', function(req, res)
         res.render('teamsGames')
     });
 
-app.get('/stadiums.hbs', function(req, res)
+    app.get('/stadiums.hbs', function(req, res)
     {
-        res.render('stadiums')
+        let query1 = "SELECT * FROM Stadiums;"
+    
+        db.pool.query(query1, function(error, rows, fields){
+            res.render('stadiums', {data: rows})
+        })
+    });
+
+    app.post('/addStadium', function(req, res){
+        // Capture the incoming data and parse it back to a JS object
+        let data = req.body;
+    
+        // Capture NULL values
+        let capacity = parseInt(data['capacityInput']);
+        if (isNaN(capacity))
+        {
+            capacity = 'NULL'
+        }
+    
+        let indoors = parseInt(data['indoorsInput']);
+        if (isNaN(indoors))
+        {
+            indoors = 'NULL'
+        }
+    
+        // Create the query and run it on the database
+        query1 = `INSERT INTO Stadiums (location, capacity, indoors) VALUES ('${data['locationInput']}', ${capacity}, ${indoors})`;
+        db.pool.query(query1, function(error, rows, fields){
+
+            // Check to see if there was an error
+            if (error) {
+
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+            // presents it on the screen
+            else
+            {
+                res.redirect('/stadiums.hbs');
+            }
+        })
+    });
+
+    app.post('/updateStadium', function(req, res){
+        // Create and run the query on the database
+        let data = req.body;
+
+        // Capture NULL values
+        let capacity = parseInt(data['capacityInput']);
+        if (isNaN(capacity))
+        {
+            capacity = 'NULL'
+        }
+    
+        let indoors = parseInt(data['indoorsInput']);
+        if (isNaN(indoors))
+        {
+            indoors = 'NULL'
+        }
+
+        let query = `UPDATE Stadiums SET location = '${data['locationInput']}', capacity = ${capacity}, indoors = ${indoors} WHERE stadiumID = '${data['stadiumID']}'`;
+        db.pool.query(query, function(error, rows, fields){
+
+            // Check for errors
+            if (error) {
+
+                // Log the error and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there's no errors, it will redirect back to our root route and run the SELECT * FROM bsg_people 
+            else
+            {
+                res.redirect('/stadiums.hbs');
+            }
+        })
+    });
+
+    // DELETE an existing stadium
+    app.post('/deleteStadium', function(req, res){
+        let data = req.body;
+
+        // Create sand run the query on the database
+        let query = `DELETE FROM Stadiums WHERE stadiumID = '${data['stadiumID']}'`;
+        db.pool.query(query, function(error, rows, fields){
+
+            // Check for errors
+            if (error) {
+
+                // Log the error and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there's no errors, it will redirect back to our root route and run the SELECT * FROM bsg_people 
+            else
+            {
+                res.redirect('/stadiums.hbs');
+            }
+        })
     });
 
     app.get('/positions.hbs', function(req, res)

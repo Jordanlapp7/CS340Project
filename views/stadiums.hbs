@@ -40,8 +40,14 @@
 			}
 		}
     function newStadium() { showform('insert'); }
-    function updateStadium(pid) { showform('update'); }
-    function deleteStadium(pid) { showform ('delete'); }
+    function updateStadium(pid) {
+      document.getElementById('updateStadiumID').value = pid;
+      showform('update');
+    }
+    function deleteStadium(pid) {
+      document.getElementById('deleteStadiumID').value = pid;
+      showform ('delete');
+    }
     function browseStadiums() { showform ('browse'); }
     function showAll() { showform ('all'); }
 </script>
@@ -50,54 +56,47 @@
 <body onload="browseStadiums()">
 
 <h2>Stadiums</h2>
+
 <div id="browse">
-<p><a href="#" onClick="showAll()">Display all forms</a> </p>
-<table border="1" cellpadding="5">
-  <tr>
-    <th><a href="#" onClick="newStadium()">New</a></th>
-    <th></th>
-    <th>ID</th>
-    <th>Location</th>
-    <th>Capacity</th>
-    <th>Indoors</th>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateStadium('this.stadiumID')">Edit</a></td>
-    <td><a href="#" onclick="deleteStadium('this.stadiumID')">Delete</a></td>
-    <td align="right" >1</td>
-    <td >East Rutherford</td>
-    <td align="right" >82,500</td>
-    <td>False</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateStadium('this.stadiumID')">Edit</a></td>
-    <td><a href="#" onclick="deleteStadium('this.stadiumID')">Delete</a></td>
-    <td align="right" >2</td>
-    <td >Pittsburgh</td>
-    <td align="right" >68,400</td>
-    <td>False</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateStadium('this.stadiumID')">Edit</a></td>
-    <td><a href="#" onclick="deleteStadium('this.stadiumID')">Delete</a></td>
-    <td align="right" >3</td>
-    <td >Inglewood</td>
-    <td align="right" >70,000</td>
-    <td>True</td>
-  </tr>
-</table>
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th><a href="#" onClick="newStadium()">New</a></th>
+        <th></th>
+        {{#each data.[0]}}
+        <th>
+          {{@key}}
+        </th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td><a href="#" onClick="updateStadium('{{this.stadiumID}}')">Edit</a></td>
+        <td><a href="#" onclick="deleteStadium('{{this.stadiumID}}')">Delete</a></td>
+        <td>{{this.stadiumID}}</td>
+        <td>{{this.location}}</td>
+        <td>{{this.capacity}}</td>
+        <td>{{this.indoors}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
 <p>&nbsp;</p>
 </div> <!-- browse -->
 <div id="insert">
-    <form method="POST" id="addStadium">
+    <form method="POST" id="addStadium" action="/addStadium">
         <legend><strong>Add Stadium</strong></legend>
           <fieldset class="fields">
-            <label> Location </label> <input type="text" name="location">
-            <label> Capacity </label> <input type="number" name="capacity">
+            <label> Location </label> <input type="text" name="locationInput">
+            <label> Capacity </label> <input type="number" name="capacityInput">
             <label> Indoors </label> 
-            <input type="radio" name="indoors">
+            <input type="radio" name="indoorsInput" value="1">
             <label> True </label>
-            <input type="radio" name="indoors">
+            <input type="radio" name="indoorsInput" value="0">
             <label> False </label>
       </fieldset>
           <input class="btn" type="submit" id="addStadium" value="Add Stadium">
@@ -106,17 +105,17 @@
 </div><!-- insert -->
 <p>&nbsp;</p>
 <div id="update">
-    <form method="POST" id="UpdateStadium">
+    <form method="POST" id="UpdateStadium" action="/updateStadium">
         <legend><strong>Update Stadium</strong></legend>
           <fieldset class="fields">
-          <input type="hidden" name="stadiumID" id="updateStadiumID" value="1">
-          <label> ID: </label> 1
-          <label> Location </label> <input type="text" name="location">
-          <label> Capacity </label> <input type="number" name="capacity">
+          <input type="hidden" name="stadiumID" id="updateStadiumID" value="">
+          <label> ID: </label> 
+          <label> Location </label> <input type="text" name="locationInput">
+          <label> Capacity </label> <input type="number" name="capacityInput">
           <label> Indoors </label> 
-          <input type="radio" name="indoors">
+          <input type="radio" name="indoorsInput" value="1">
           <label> True </label>
-          <input type="radio" name="indoors">
+          <input type="radio" name="indoorsInput" value="0">
           <label> False </label>
     </fieldset>
         <input class="btn" type="submit" id="addStadium" value="Add Stadium">
@@ -125,13 +124,13 @@
 </div><!-- update -->
 <p>&nbsp;</p>
 <div id="delete" style="display: block">
-  <form method="POST" id="deleteStadium">
+  <form method="POST" id="deleteStadium" action="/deleteStadium">
       <legend><strong>Delete Stadium</strong></legend>
           <fieldset class="fields">
           <p>Are you sure you wish to delete the following?</p>
-          <input type="hidden" name="stadiumID" id="deleteStadiumID" value="1">
-          <label><strong>ID:</strong></label> 1
-            <label> <strong>Name</strong> </label> East Rutherford
+          <input type="hidden" name="stadiumID" id="deleteStadiumID" value="">
+          <label><strong>ID:</strong></label> 
+            <label> <strong>Name</strong> </label> 
             
     </fieldset>
     <input class="btn" type="submit" id="DeleteStadium" value="Delete Stadium">
