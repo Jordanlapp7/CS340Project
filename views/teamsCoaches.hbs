@@ -40,8 +40,14 @@
 			}
 		}
     function newTeamCoach() { showform('insert'); }
-    function updateTeamCoach(pid) { showform('update'); }
-    function deleteTeamCoach(pid) { showform ('delete'); }
+    function updateTeamCoach(pid) {
+      document.getElementById('updateTeamCoachID').value = pid;
+      showform('update');
+      }
+    function deleteTeamCoach(pid) {
+      document.getElementById('deleteTeamCoachID').value = pid;
+      showform ('delete');
+      }
     function browseTeamsCoaches() { showform ('browse'); }
     function showAll() { showform ('all'); }
 </script>
@@ -50,59 +56,41 @@
 <body onload="browseTeamsCoaches()">
 
 <h2>Team-Coach Relationships</h2>
+
 <div id="browse">
-<p><a href="#" onClick="showAll()">Display all forms</a> </p>
-<table border="1" cellpadding="5">
-  <tr>
-    <th><a href="#" onClick="newTeam()">New</a></th>
-    <th></th>
-    <th>ID</th>
-    <th>Team</th>
-    <th>Coach</th>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateTeamCoach('this.teamCoachID')">Edit</a></td>
-    <td><a href="#" onclick="deleteTeamCoach('this.teamCoachID')">Delete</a></td>
-    <td >1</td>
-    <td>Steelers</td>
-    <td>Mike Tomlin</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateTeamCoach('this.teamCoachID')">Edit</a></td>
-    <td><a href="#" onclick="deleteTeamCoach('this.teamCoachID')">Delete</a></td>
-    <td >2</td>
-    <td>Jets</td>
-    <td>Robert Salah</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateTeamCoach('this.teamCoachID')">Edit</a></td>
-    <td><a href="#" onclick="deleteTeamCoach('this.teamCoachID')">Delete</a></td>
-    <td >3</td>
-    <td>Giants</td>
-    <td>Brian Daboll</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateTeamCoach('this.teamCoachID')">Edit</a></td>
-    <td><a href="#" onclick="deleteTeamCoach('this.teamCoachID')">Delete</a></td>
-    <td >4</td>
-    <td>Jets</td>
-    <td>Rex Ryan</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateTeamCoach('this.teamCoachID')">Edit</a></td>
-    <td><a href="#" onclick="deleteTeamCoach('this.teamCoachID')">Delete</a></td>
-    <td >5</td>
-    <td>Chargers</td>
-    <td>Rex Ryan</td>
-  </tr>
-</table>
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th><a href="#" onClick="newTeamCoach()">New</a></th>
+        <th></th>
+        {{#each data.[0]}}
+        <th>
+          {{@key}}
+        </th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td><a href="#" onClick="updateTeamCoach('{{this.teamCoachID}}')">Edit</a></td>
+        <td><a href="#" onclick="deleteTeamCoach('{{this.teamCoachID}}')">Delete</a></td>
+        <td>{{this.teamCoachID}}</td>
+        <td>{{this.teamID}}</td>
+        <td>{{this.coachID}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
 <p>&nbsp;</p>
 </div> <!-- browse -->
 <div id="insert">
-    <form method="POST" id="addTeamCoach">
+    <form method="POST" id="addTeamCoach" action="/addTeamCoach">
         <legend><strong>Add Team-Coach Relationship</strong></legend>
           <fieldset class="fields">
-            <label> Team </label> <select name="teamID">
+            <label> Team </label> <select name="teamIDInput">
             	<option value="0">&nbsp;</option>
                 <option value="1">Jets</option>
                 <option value="2">Giants</option>
@@ -110,7 +98,7 @@
                 <option value="4">Rams</option>
                 <option value="5">Chargers</option>
                 </select>
-            <label> Coach </label> <select name="coachId">
+            <label> Coach </label> <select name="coachIDInput">
                 <option value="0">&nbsp;</option>
                 <option value="1">Robert Salah</option>
                 <option value="2">Mike Tomlin</option>
@@ -124,10 +112,11 @@
 </div><!-- insert -->
 <p>&nbsp;</p>
 <div id="update">
-    <form method="POST" id="UpdateTeamCoach">
+    <form method="POST" id="UpdateTeamCoach" action="/updateTeamCoach">
         <legend><strong>Update Team-Coach Relationship</strong></legend>
           <fieldset class="fields">
-            <label> Team </label> <select name="teamId">
+            <input type="hidden" name="teamCoachID" id="updateTeamCoachID" value="">
+            <label> Team </label> <select name="teamIDInput">
             	<option value="0">&nbsp;</option>
                 <option value="1">Jets</option>
                 <option value="2">Giants</option>
@@ -135,7 +124,7 @@
                 <option value="4">Rams</option>
                 <option value="5">Chargers</option>
                 </select>
-            <label> Coach </label> <select name="coachId">
+            <label> Coach </label> <select name="coachIDInput">
                 <option value="0">&nbsp;</option>
                 <option value="1">Robert Salah</option>
                 <option value="2">Mike Tomlin</option>
@@ -149,8 +138,9 @@
 </div><!-- update -->
 <p>&nbsp;</p>
 <div id="delete" style="display: block">
-  <form method="POST" id="deleteTeamCoach">
+  <form method="POST" id="deleteTeamCoach" action="/deleteTeamCoach">
       <legend><strong>Delete Team-Coach Relationship</strong></legend>
+        <input type="hidden" name="teamCoachID" id="deleteTeamCoachID" value="">
           <fieldset class="fields">
           <p>Are you sure you wish to delete the following?</p>
           <input type="hidden" name="teamCoachID" id="deleteTeamCoachID" value="1">

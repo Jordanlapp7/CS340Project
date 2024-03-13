@@ -159,11 +159,6 @@ app.get('/', function(req, res)
         res.render('index');                    
     });                                        
 
-    app.get('/teamsCoaches.hbs', function(req, res)
-    {
-        res.render('teamsCoaches')
-    });
-
     app.get('/players.hbs', function(req, res)
     {
         let query1 = "SELECT * FROM Players;"
@@ -381,9 +376,130 @@ app.get('/teamsPlayers.hbs', function(req, res)
         })
     });
 
-app.get('/teamsCoaches.hbs', function(req, res)
+    app.get('/teamsCoaches.hbs', function(req, res)
     {
-        res.render('teamsCoaches')
+        let query1 = "SELECT * FROM TeamsCoaches;"
+
+        let query2 = "SELECT * FROM Teams;"
+
+        let query3 = "SELECT * FROM Coaches"
+
+        db.pool.query(query1, function(error, rows, fields){
+        
+            let teamsCoaches = rows;
+
+            db.pool.query(query2, function(error, rows, fields){
+
+                let teams = rows;
+
+                db.pool.query(query3, function(error, rows, fields){
+
+                    let coaches = rows;
+
+                    return res.render('teamsCoaches', {data: teamsCoaches, teams: teams, coaches, coaches});
+
+                });
+
+            });
+        });
+    });
+
+    app.post('/addTeamCoach', function(req, res){
+        // Capture the incoming data and parse it back to a JS object
+        let data = req.body;
+    
+        // Capture NULL values
+        let teamID = parseInt(data['teamIDInput']);
+        if (isNaN(teamID))
+        {
+            teamID = 'NULL'
+        }
+    
+        let coachID = parseInt(data['coachIDInput']);
+        if (isNaN(coachID))
+        {
+            coachID = 'NULL'
+        }
+
+        // Create the query and run it on the database
+        query1 = `INSERT INTO TeamsCoaches (teamID, coachID) VALUES (${teamID}, ${coachID})`;
+        db.pool.query(query1, function(error, rows, fields){
+
+            // Check to see if there was an error
+            if (error) {
+
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+            // presents it on the screen
+            else
+            {
+                res.redirect('/teamsCoaches.hbs');
+            }
+        })
+    });
+
+    app.post('/updateTeamCoach', function(req, res){
+        // Create and run the query on the database
+        let data = req.body;
+        
+        // Capture NULL values
+        let teamID = parseInt(data['teamIDInput']);
+        if (isNaN(teamID))
+        {
+            teamID = 'NULL'
+        }
+    
+        let coachID = parseInt(data['coachIDInput']);
+        if (isNaN(coachID))
+        {
+            coachID = 'NULL'
+        }
+
+        let query = `UPDATE TeamsCoaches SET teamID = ${teamID}, coachID = ${coachID} WHERE teamCoachID = '${data['teamCoachID']}'`;
+        db.pool.query(query, function(error, rows, fields){
+
+            // Check for errors
+            if (error) {
+
+                // Log the error and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there's no errors, it will redirect back to our root route and run the SELECT * FROM bsg_people 
+            else
+            {
+                res.redirect('/teamsCoaches.hbs');
+            }
+        })
+    });
+
+    // DELETE an existing team-coach relationship
+    app.post('/deleteTeamCoach', function(req, res){
+        let data = req.body;
+
+        // Create sand run the query on the database
+        let query = `DELETE FROM TeamsCoaches WHERE teamCoachID = '${data['teamCoachID']}'`;
+        db.pool.query(query, function(error, rows, fields){
+
+            // Check for errors
+            if (error) {
+
+                // Log the error and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there's no errors, it will redirect back to our root route and run the SELECT * FROM bsg_people 
+            else
+            {
+                res.redirect('/teamsCoaches.hbs');
+            }
+        })
     });
 
     app.get('/games.hbs', function(req, res)
