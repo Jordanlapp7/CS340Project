@@ -765,9 +765,130 @@ app.get('/', function(req, res)
         })
     });
 
-app.get('/teamsGames.hbs', function(req, res)
+    app.get('/teamsGames.hbs', function(req, res)
     {
-        res.render('teamsGames')
+        let query1 = "SELECT * FROM TeamsGames;"
+
+        let query2 = "SELECT * FROM Teams;"
+
+        let query3 = "SELECT * FROM Games;"
+
+        db.pool.query(query1, function(error, rows, fields){
+        
+            let teamsGames = rows;
+
+            db.pool.query(query2, function(error, rows, fields){
+
+                let teams = rows;
+
+                db.pool.query(query3, function(error, rows, fields){
+
+                    let games = rows;
+
+                    return res.render('teamsGames', {data: teamsGames, teams: teams, games: games});
+
+                });
+
+            });
+        });
+    });
+
+    app.post('/addTeamGame', function(req, res){
+        // Capture the incoming data and parse it back to a JS object
+        let data = req.body;
+    
+        // Capture NULL values
+        let teamID = parseInt(data['teamIDInput']);
+        if (isNaN(teamID))
+        {
+            teamID = 'NULL'
+        }
+    
+        let gameID = parseInt(data['gameIDInput']);
+        if (isNaN(gameID))
+        {
+            gameID = 'NULL'
+        }
+
+        // Create the query and run it on the database
+        query1 = `INSERT INTO TeamsGames (teamID, gameID, isHomeTeam) VALUES (${teamID}, ${gameID}, '${data['isHomeTeamInput']}')`;
+        db.pool.query(query1, function(error, rows, fields){
+
+            // Check to see if there was an error
+            if (error) {
+
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+            // presents it on the screen
+            else
+            {
+                res.redirect('/teamsGames.hbs');
+            }
+        })
+    });
+
+    app.post('/updateTeamGame', function(req, res){
+        // Create and run the query on the database
+        let data = req.body;
+        
+        // Capture NULL values
+        let teamID = parseInt(data['teamIDInput']);
+        if (isNaN(teamID))
+        {
+            teamID = 'NULL'
+        }
+    
+        let gameID = parseInt(data['gameIDInput']);
+        if (isNaN(gameID))
+        {
+            gameID = 'NULL'
+        }
+
+        let query = `UPDATE TeamsGames SET teamID = ${teamID}, gameID = ${gameID}, isHomeTeam = '${data['isHomeTeamInput']}' WHERE teamGameID = '${data['teamGameID']}'`;
+        db.pool.query(query, function(error, rows, fields){
+
+            // Check for errors
+            if (error) {
+
+                // Log the error and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there's no errors, it will redirect back to our root route and run the SELECT * FROM bsg_people 
+            else
+            {
+                res.redirect('/teamsGames.hbs');
+            }
+        })
+    });
+
+    // DELETE an existing team-player relationship
+    app.post('/deleteTeamGame', function(req, res){
+        let data = req.body;
+
+        // Create sand run the query on the database
+        let query = `DELETE FROM TeamsGames WHERE teamGameID = '${data['teamGameID']}'`;
+        db.pool.query(query, function(error, rows, fields){
+
+            // Check for errors
+            if (error) {
+
+                // Log the error and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there's no errors, it will redirect back to our root route and run the SELECT * FROM bsg_people 
+            else
+            {
+                res.redirect('/teamsGames.hbs');
+            }
+        })
     });
 
     app.get('/stadiums.hbs', function(req, res)

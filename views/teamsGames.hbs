@@ -40,8 +40,14 @@
 			}
 		}
     function newTeamGame() { showform('insert'); }
-    function updateTeamGame(pid) { showform('update'); }
-    function deleteTeamGame(pid) { showform ('delete'); }
+    function updateTeamGame(pid) {
+      document.getElementById('updateTeamGameID').value = pid;
+      showform('update'); 
+      }
+    function deleteTeamGame(pid) {
+      document.getElementById('deleteTeamGameID').value = pid;
+      showform ('delete');
+      }
     function browseTeamsGames() { showform ('browse'); }
     function showAll() { showform ('all'); }
 </script>
@@ -50,65 +56,42 @@
 <body onload="browseTeamsGames()">
 
 <h2>Team-Game Relationships</h2>
+
 <div id="browse">
-<p><a href="#" onClick="showAll()">Display all forms</a> </p>
-<table border="1" cellpadding="5">
-  <tr>
-    <th><a href="#" onClick="newTeam()">New</a></th>
-    <th></th>
-    <th>ID</th>
-    <th>Team</th>
-    <th>Opponent</th>
-    <th>Game</th>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateTeamGame('this.teamGameID')">Edit</a></td>
-    <td><a href="#" onclick="deleteTeamGame('this.teamGameID')">Delete</a></td>
-    <td >1</td>
-    <td>Steelers</td>
-    <td>Rams</td>
-    <td>Week 16, 2022</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateTeamGame('this.teamGameID')">Edit</a></td>
-    <td><a href="#" onclick="deleteTeamGame('this.teamGameID')">Delete</a></td>
-    <td >1</td>
-    <td>Steelers</td>
-    <td>Chargers</td>
-    <td>Week 17, 2023</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateTeamGame('this.teamGameID')">Edit</a></td>
-    <td><a href="#" onclick="deleteTeamGame('this.teamGameID')">Delete</a></td>
-    <td >2</td>
-    <td>Rams</td>
-    <td>Steelers</td>
-    <td>Week 16, 2022</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateTeamGame('this.teamGameID')">Edit</a></td>
-    <td><a href="#" onclick="deleteTeamGame('this.teamGameID')">Delete</a></td>
-    <td >3</td>
-    <td>Chargers</td>
-    <td>Jets</td>
-    <td>Week 7, 2019</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateTeamGame('this.teamGameID')">Edit</a></td>
-    <td><a href="#" onclick="deleteTeamGame('this.teamGameID')">Delete</a></td>
-    <td >1</td>
-    <td>Giants</td>
-    <td>Jets</td>
-    <td>Week 4, 2020</td>
-  </tr>
-</table>
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th><a href="#" onClick="newTeamGame()">New</a></th>
+        <th></th>
+        {{#each data.[0]}}
+        <th>
+          {{@key}}
+        </th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td><a href="#" onClick="updateTeamGame('{{this.teamGameID}}')">Edit</a></td>
+        <td><a href="#" onclick="deleteTeamGame('{{this.teamGameID}}')">Delete</a></td>
+        <td>{{this.teamGameID}}</td>
+        <td>{{this.teamID}}</td>
+        <td>{{this.gameID}}</td>
+        <td>{{this.isHomeTeam}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
 <p>&nbsp;</p>
 </div> <!-- browse -->
 <div id="insert">
-    <form method="POST" id="addTeamGame">
+    <form method="POST" id="addTeamGame" action="/addTeamGame">
         <legend><strong>Add Team-Game Relationship</strong></legend>
           <fieldset class="fields">
-            <label> Team </label> <select name="teamID">
+            <label> Team </label> <select name="teamIDInput">
             	<option value="0">&nbsp;</option>
                 <option value="1">Jets</option>
                 <option value="2">Giants</option>
@@ -116,13 +99,16 @@
                 <option value="4">Rams</option>
                 <option value="5">Chargers</option>
                 </select>
-            <label> Game </label> <select name="gameId">
+            <label> Game </label> <select name="gameIDInput">
                 <option value="0">&nbsp;</option>
                 <option value="1">Week 16, 2022</option>
                 <option value="2">Week 17, 2023</option>
                 <option value="3">Week 8, 2019</option>
                 <option value="4">Week 4, 2020</option>
                 </select>
+              <label>Home team?</label>
+              <input type="radio" name="isHomeTeamInput" id="isHomeTeamInput" value="1"><label>True</label>
+              <input type="radio" name="isHomeTeamInput" id="isHomeTeamInput" value="0"><label>False</label>
       </fieldset>
           <input class="btn" type="submit" id="addTeamGame" value="Add Team Game">
           <input class="btn" type="button" value="cancel" onClick="browseTeamsGames()">
@@ -130,10 +116,11 @@
 </div><!-- insert -->
 <p>&nbsp;</p>
 <div id="update">
-    <form method="POST" id="updateTeamGame">
+    <form method="POST" id="updateTeamGame" action="/updateTeamGame">
         <legend><strong>Update Team-Game Relationship</strong></legend>
           <fieldset class="fields">
-            <label> Team </label> <select name="teamID">
+            <input type="hidden" name="teamGameID" id="updateTeamGameID" value="">
+            <label> Team </label> <select name="teamIDInput">
             	<option value="0">&nbsp;</option>
                 <option value="1">Jets</option>
                 <option value="2">Giants</option>
@@ -141,13 +128,16 @@
                 <option value="4">Rams</option>
                 <option value="5">Chargers</option>
                 </select>
-            <label> Coach </label> <select name="gameId">
+            <label> Coach </label> <select name="gameIDInput">
                 <option value="0">&nbsp;</option>
                 <option value="1">Week 16, 2022</option>
                 <option value="2">Week 17, 2023</option>
                 <option value="3">Week 8, 2019</option>
                 <option value="4">Week 4, 2020</option>
                 </select>
+            <label>Home team?</label>
+            <input type="radio" name="isHomeTeamInput" id="isHomeTeamInput" value="1"><label>True</label>
+            <input type="radio" name="isHomeTeamInput" id="isHomeTeamInput" value="0"><label>False</label>
       </fieldset>
           <input class="btn" type="submit" id="addTeamGame" value="Add Team Game">
           <input class="btn" type="button" value="cancel" onClick="browseTeamsGames()">
@@ -155,8 +145,9 @@
 </div><!-- update -->
 <p>&nbsp;</p>
 <div id="delete" style="display: block">
-  <form method="POST" id="deleteTeamGame">
+  <form method="POST" id="deleteTeamGame" action="/deleteTeamGame">
       <legend><strong>Delete Team-Game Relationship</strong></legend>
+        <input type="hidden" name="teamGameID" id="deleteTeamGameID" value="">
           <fieldset class="fields">
           <p>Are you sure you wish to delete the following?</p>
           <input type="hidden" name="teamGameID" id="deleteTeamGameID" value="1">
