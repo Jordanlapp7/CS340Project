@@ -253,9 +253,130 @@ app.get('/', function(req, res)
         })
     });
 
-app.get('/teamsPlayers.hbs', function(req, res)
+    app.get('/teamsPlayers.hbs', function(req, res)
     {
-        res.render('teamsPlayers')
+        let query1 = "SELECT * FROM TeamsPlayers;"
+
+        let query2 = "SELECT * FROM Teams;"
+
+        let query3 = "SELECT * FROM Players"
+
+        db.pool.query(query1, function(error, rows, fields){
+        
+            let teamsPlayers = rows;
+
+            db.pool.query(query2, function(error, rows, fields){
+
+                let teams = rows;
+
+                db.pool.query(query3, function(error, rows, fields){
+
+                    let players = rows;
+
+                    return res.render('teamsPlayers', {data: teamsPlayers, teams: teams, players: players});
+
+                });
+
+            });
+        });
+    });
+
+    app.post('/addTeamPlayer', function(req, res){
+        // Capture the incoming data and parse it back to a JS object
+        let data = req.body;
+    
+        // Capture NULL values
+        let teamID = parseInt(data['teamIDInput']);
+        if (isNaN(teamID))
+        {
+            teamID = 'NULL'
+        }
+    
+        let playerID = parseInt(data['playerIDInput']);
+        if (isNaN(playerID))
+        {
+            playerID = 'NULL'
+        }
+
+        // Create the query and run it on the database
+        query1 = `INSERT INTO TeamsPlayers (teamID, playerID) VALUES (${teamID}, ${playerID})`;
+        db.pool.query(query1, function(error, rows, fields){
+
+            // Check to see if there was an error
+            if (error) {
+
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+            // presents it on the screen
+            else
+            {
+                res.redirect('/teamsPlayers.hbs');
+            }
+        })
+    });
+
+    app.post('/updateTeamPlayer', function(req, res){
+        // Create and run the query on the database
+        let data = req.body;
+        
+        // Capture NULL values
+        let teamID = parseInt(data['teamIDInput']);
+        if (isNaN(teamID))
+        {
+            teamID = 'NULL'
+        }
+    
+        let playerID = parseInt(data['playerIDInput']);
+        if (isNaN(playerID))
+        {
+            playerID = 'NULL'
+        }
+
+        let query = `UPDATE TeamsPlayers SET teamID = ${teamID}, playerID = ${playerID} WHERE teamPlayerID = '${data['teamPlayerID']}'`;
+        db.pool.query(query, function(error, rows, fields){
+
+            // Check for errors
+            if (error) {
+
+                // Log the error and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there's no errors, it will redirect back to our root route and run the SELECT * FROM bsg_people 
+            else
+            {
+                res.redirect('/teamsPlayers.hbs');
+            }
+        })
+    });
+
+    // DELETE an existing team-player relationship
+    app.post('/deleteTeamPlayer', function(req, res){
+        let data = req.body;
+
+        // Create sand run the query on the database
+        let query = `DELETE FROM TeamsPlayers WHERE teamPlayerID = '${data['teamPlayerID']}'`;
+        db.pool.query(query, function(error, rows, fields){
+
+            // Check for errors
+            if (error) {
+
+                // Log the error and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there's no errors, it will redirect back to our root route and run the SELECT * FROM bsg_people 
+            else
+            {
+                res.redirect('/teamsPlayers.hbs');
+            }
+        })
     });
 
     app.get('/coaches.hbs', function(req, res)
@@ -396,7 +517,7 @@ app.get('/teamsPlayers.hbs', function(req, res)
 
                     let coaches = rows;
 
-                    return res.render('teamsCoaches', {data: teamsCoaches, teams: teams, coaches, coaches});
+                    return res.render('teamsCoaches', {data: teamsCoaches, teams: teams, coaches: coaches});
 
                 });
 
@@ -445,7 +566,7 @@ app.get('/teamsPlayers.hbs', function(req, res)
     app.post('/updateTeamCoach', function(req, res){
         // Create and run the query on the database
         let data = req.body;
-        
+
         // Capture NULL values
         let teamID = parseInt(data['teamIDInput']);
         if (isNaN(teamID))
