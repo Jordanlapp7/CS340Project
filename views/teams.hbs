@@ -95,11 +95,11 @@
           <fieldset class="fields">
             <label> Name </label> <input type="text" name="teamNameInput">
             <label> Stadium </label> <select name="stadiumIDInput">
-            	<option value="0">&nbsp;</option>
-                <option value="1">East Rutherford</option>
-                <option value="2">Pittsburgh</option>
-                <option value="3">Inglewood</option>
-                </select>
+            	<option value="0">Select a stadium</option>
+              {{#each stadiums}}
+              <option value="{{this.stadiumID}}">{{this.location}}</option>
+              {{/each}}
+              </select>
               <label> Inception </label> <input type="date" name="inceptionInput">
               <label> Total Wins </label> <input type="number" name="totalWinsInput">
               <label> Total Games </label> <input type="number" name="totalGamesInput">
@@ -114,13 +114,12 @@
         <legend><strong>Update Team</strong></legend>
           <fieldset class="fields">
           <input type="hidden" name="teamID" id="updateTeamID" value="">
-          <label> ID: </label> 1
           <label> Name </label> <input type="text" name="teamNameInput">
           <label> Stadium </label> <select name="stadiumIDInput">
-            <option value="0">&nbsp;</option>
-              <option value="1">East Rutherford</option>
-              <option value="2">Pittsburgh</option>
-              <option value="3">Inglewood</option>
+            <option value="0">Select a stadium</option>
+              {{#each stadiums}}
+              <option value="{{this.stadiumID}}">{{this.location}}</option>
+              {{/each}}
               </select>
             <label> Inception </label> <input type="date" name="inceptionInput">
             <label> Total Wins </label> <input type="number" name="totalWinsInput">

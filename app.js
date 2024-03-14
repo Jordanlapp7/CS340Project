@@ -39,10 +39,20 @@ app.get('/', function(req, res)
     app.get('/teams.hbs', function(req, res)
     {
         let query1 = "SELECT * FROM Teams;"
+
+        let query2 = "SELECT * FROM Stadiums;"
     
         db.pool.query(query1, function(error, rows, fields){
-            res.render('teams', {data: rows})
-        })
+
+            let teams = rows;
+
+            db.pool.query(query2, function(error, rows, fields){
+
+                let stadiums = rows;
+
+                res.render('teams', {data: teams, stadiums: stadiums})
+            });
+        });
     });
 
     app.post('/addTeam', function(req, res){
