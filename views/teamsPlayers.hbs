@@ -91,19 +91,16 @@
         <legend><strong>Add Team-Player Relationship</strong></legend>
           <fieldset class="fields">
             <label> Team </label> <select name="teamIDInput">
-            	<option value="0">&nbsp;</option>
-                <option value="1">Jets</option>
-                <option value="2">Giants</option>
-                <option value="3">Steelers</option>
-                <option value="4">Rams</option>
-                <option value="5">Chargers</option>
+            	<option value="">Select a Team</option>
+              {{#each teams}}
+              <option value="{{this.teamID}}">{{this.teamName}}</option>
+              {{/each}}
                 </select>
-            <label> Coach </label> <select name="playerIDInput">
-                <option value="0">&nbsp;</option>
-                <option value="1">Justin Fields</option>
-                <option value="2">Kenny Pickett</option>
-                <option value="3">Aaron Rodgers</option>
-                <option value="4">Daniel Jones</option>
+            <label> Player </label> <select name="playerIDInput">
+                <option value="">Select a Player</option>
+              {{#each players}}
+              <option value="{{this.playerID}}">{{this.fname}} {{this.lname}}</option>
+              {{/each}}
                 </select>
       </fieldset>
           <input class="btn" type="submit" id="addTeamPlayer" value="Add Team Player">
@@ -117,19 +114,16 @@
           <fieldset class="fields">
             <input type="hidden" name="teamPlayerID" id="updateTeamPlayerID" value="">
             <label> Team </label> <select name="teamIDInput">
-            	<option value="0">&nbsp;</option>
-                <option value="1">Jets</option>
-                <option value="2">Giants</option>
-                <option value="3">Steelers</option>
-                <option value="4">Rams</option>
-                <option value="5">Chargers</option>
+            	<option value="">Select a Team</option>
+              {{#each teams}}
+              <option value="{{this.teamID}}">{{this.teamName}}</option>
+              {{/each}}
                 </select>
             <label> Player </label> <select name="playerIDInput">
-                <option value="0">&nbsp;</option>
-                <option value="1">Justin Fields</option>
-                <option value="2">Kenny Pickett</option>
-                <option value="3">Aaron Rodgers</option>
-                <option value="4">Daniel Jones</option>
+                <option value="">Select a Player</option>
+              {{#each players}}
+              <option value="{{this.playerID}}">{{this.fname}} {{this.lname}}</option>
+              {{/each}}
                 </select>
       </fieldset>
           <input class="btn" type="submit" id="UpdateSaveTeamPlayer" value="Save Update Team Player">
