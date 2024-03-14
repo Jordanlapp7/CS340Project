@@ -129,13 +129,11 @@
   <form method="POST" id="deleteGame" action="/deleteGame">
       <legend><strong>Delete Game</strong></legend>
           <fieldset class="fields">
-          <p>Are you sure you wish to delete the following?</p>
-          <input type="hidden" name="gameID" id="deleteGameID" value="">
-          <label><strong>ID:</strong></label> 1
-            
+          <p>Are you sure you wish to delete the game?</p>
+          <input type="hidden" name="gameID" id="deleteGameID" value="">        
     </fieldset>
     <input class="btn" type="submit" id="deleteGame" value="Delete Game">
-          <input class="btn" type="button" value="cancel" onClick="browseGames()">
+          <input class="btn" type="button" value="Cancel" onClick="browseGames()">
   </form> 
 </div><!-- delete -->
 

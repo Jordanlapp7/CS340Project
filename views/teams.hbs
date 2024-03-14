@@ -135,13 +135,10 @@
   <form method="POST" id="deleteTeam" action="/deleteTeam">
       <legend><strong>Delete Team</strong></legend>
           <fieldset class="fields">
-          <p>Are you sure you wish to delete the following?</p>
+          <p>Are you sure you wish to delete the team?</p>
           <input type="hidden" name="teamID" id="deleteTeamID" value="">
-          <label><strong>ID:</strong></label> {{deleteTeamID}}
-            <label> <strong>Name:</strong> </label> {{this.teamName}}
-    </fieldset>
     <input class="btn" type="submit" id="DeleteTeam" value="Delete Team">
-          <input class="btn" type="button" value="cancel" onClick="browseTeams()">
+          <input class="btn" type="button" value="Cancel" onClick="browseTeams()">
   </form> 
 </div><!-- delete -->
 

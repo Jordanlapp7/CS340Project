@@ -125,10 +125,8 @@
   <form method="POST" id="deleteCoach" action="/deleteCoach">
       <legend><strong>Delete Coach</strong></legend>
           <fieldset class="fields">
-          <p>Are you sure you wish to delete the following?</p>
-          <input type="hidden" name="coachID" id="deleteCoachID" value="1"> {{deletecoachID}}
-          <label><strong>ID:</strong></label> {{this.coachName}}
-            
+          <p>Are you sure you wish to delete the coach?</p>
+          <input type="hidden" name="coachID" id="deleteCoachID" value="1">
     </fieldset>
     <input class="btn" type="submit" id="DeleteCoach" value="Delete Coach">
           <input class="btn" type="button" value="cancel" onClick="browseCoaches()">
