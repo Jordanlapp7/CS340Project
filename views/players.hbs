@@ -96,12 +96,10 @@
             <label>Salary</label> <input type="text" name="salaryInput">
             <label>Position</label>
             <select name="positionIDInput">
-                <option value="0">&nbsp;</option>
-                <option value="DB">DB</option>
-                <option value="LB">LB</option>
-                <option value="QB">QB</option>
-                <option value="RB">RB</option>
-                <option value="WR">WR</option>
+                <option value="0">Select a position</option>
+                {{#each positions}}
+                <option value="{{this.positionID}}">{{this.positionID}}</option>
+                {{/each}}
             </select>
         </fieldset>
         <input class="btn" type="submit" id="addPlayer" value="Add Player">
@@ -114,18 +112,15 @@
         <legend><strong>Update Player</strong></legend>
         <fieldset class="fields">
             <input type="hidden" name="playerID" id="updatePlayerID" value="">
-            <label>ID: </label> 1
             <label>First Name</label> <input type="text" name="fnameInput">
             <label>Last Name</label> <input type="text" name="lnameInput">
             <label>Salary</label> <input type="text" name="salaryInput">
             <label>Position</label>
             <select name="positionIDInput">
-                <option value="0">&nbsp;</option>
-                <option value="DB">DB</option>
-                <option value="LB">LB</option>
-                <option value="QB">QB</option>
-                <option value="RB">RB</option>
-                <option value="WR">WR</option>
+                <option value="0">Select a position</option>
+                {{#each positions}}
+                <option value="{{this.positionID}}">{{this.positionID}}</option>
+                {{/each}}
             </select>
         </fieldset>
         <input class="btn" type="submit" id="updatePlayer" value="Update Player">

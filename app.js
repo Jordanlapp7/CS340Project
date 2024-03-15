@@ -172,10 +172,20 @@ app.get('/', function(req, res)
     app.get('/players.hbs', function(req, res)
     {
         let query1 = "SELECT * FROM Players;"
+
+        let query2 = "SELECT * FROM Positions;"
     
         db.pool.query(query1, function(error, rows, fields){
-            res.render('players', {data: rows})
-        })
+
+            let players = rows;
+
+            db.pool.query(query2, function(error, rows, field){
+
+                let positions = rows;
+
+                res.render('players', {data: players, positions: positions})
+            });
+        });
     });
 
     app.post('/addPlayer', function(req, res){
