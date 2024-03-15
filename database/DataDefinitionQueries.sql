@@ -139,11 +139,17 @@ VALUES
 -- Positions table data
 INSERT INTO Positions (positionID, description)
 VALUES
-('QB', 'The quarterback is the leader of the offense, responsible for calling plays, throwing passes, and occasionally running with the ball.'),
-('RB', 'A running back''s primary roles are to receive handoffs from the quarterback for a rushing play, catch passes, and block.'),
-('WR', 'Wide receivers are fast and agile players who catch passes thrown by the quarterback and work to gain as much yardage as possible after the catch.'),
-('DB', 'Defensive backs, including cornerbacks and safeties, are tasked with defending against the opposing team''s passing attacks by intercepting passes and tackling receivers.'),
-('LB', 'Linebackers play a versatile role on defense, responsible for stopping the run, covering pass routes, and rushing the quarterback.');
+('QB', 'The quarterback directs the offense, making key decisions and throwing passes.'),
+('RB', 'A running back primarily runs with the ball and also assists in passing plays.'),
+('WR', 'Wide receivers catch passes from the quarterback, aiming to advance the ball and score.'),
+('TE', 'Tight ends play both offensive line and receiver roles, blocking and catching passes.'), 
+('OL', 'Offensive linemen protect the quarterback and block for running plays.'), 
+('DL', 'Defensive linemen confront the offensive line to stop runs and pressure the quarterback.'), 
+('LB', 'Linebackers defend against the run, cover pass receivers, and rush the quarterback.'), 
+('CB', 'Cornerbacks primarily cover wide receivers to prevent them from catching passes.'), 
+('S', 'Safeties provide deep pass coverage and support in stopping the running play.'), 
+('K', 'Kickers are responsible for field goals and kickoffs.'), 
+('P', 'Punters kick the ball to the opposing team, aiming for field position over distance.');
 
 -- Players table data
 INSERT INTO Players (playerID, fname, lname, salary, positionID)
