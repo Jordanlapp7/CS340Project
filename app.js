@@ -292,7 +292,7 @@ app.get('/', function(req, res)
                 db.pool.query(query3, function(error, rows, fields){
 
                     let players = rows;
-                    console.log(players);
+
                     return res.render('teamsPlayers', {data: teamsPlayers, teams: teams, players: players});
 
                 });
